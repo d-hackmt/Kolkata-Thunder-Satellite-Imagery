@@ -1,0 +1,3 @@
+0 Thunderstrom Alert
+1 Clear Sky we are SAFE
+2 No Thunderstrom but cloudy
