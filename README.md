@@ -2,8 +2,8 @@
 
 This Streamlit app predicts thunderstorm occurrence based on satellite imagery.
 
-## Checkout the projekt : 
-- [Thunderstrom Prediction using Deep learning DEMO ](https://thunderstrom.streamlit.app/) 
+<!-- ## Checkout the projekt : 
+- [Thunderstrom Prediction using Deep learning DEMO ](https://thunderstrom.streamlit.app/) --> 
 
 ![KolkataThunderstormClassificationonSatelliteImagery-GoogleChrome2024-03-2113-59-06-ezgif com-optimize](https://github.com/d-hackmt/Kolkata-Thunder-Satellite-Imagery/assets/113240252/e39e99e3-0745-4d2c-b68f-b37bf5462a39)
 
