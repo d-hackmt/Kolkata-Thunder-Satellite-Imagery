@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 from keras.models import load_model
 from PIL import Image, ImageOps
-
+import tensorflow as tf
 from util import set_background
 
 
@@ -38,8 +38,8 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files\keras_Model.h5", compile=False)
-    class_names = open("model_files\labels.txt", "r").readlines()
+    model = tf.keras.models.load_model("model_files/keras_Model.h5", compile=False)
+    class_names = open("model_files/labels.txt", "r").readlines()
     
     # Check if image is uploaded
     if uploaded_file is not None:
