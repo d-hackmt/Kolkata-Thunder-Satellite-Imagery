@@ -62,13 +62,10 @@ def main():
         
         # Prepare the image for classification
         binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
-        st.image(binary_image_rgb, channels="RGB")
-        resized_image = cv2.resize(binary_image_rgb, (128, 120))  # Resize to match model input shape
-        normalized_image_array = (resized_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
-        data = np.expand_dims(normalized_image_array, axis=0)
+        st.image(binary_image_rgb, channels="GRAY")
 
         # Predict using the model
-        prediction = model.predict(data)
+        prediction = model.predict(binary_image_rgb)
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
