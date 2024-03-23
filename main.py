@@ -61,7 +61,6 @@ def main():
             st.image(binary_image, channels="GRAY")
         
         # Prepare the image for classification
-        binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
         st.image(binary_image_rgb, channels="GRAY")
 
         # Prepare the image for classification
