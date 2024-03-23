@@ -35,8 +35,8 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files/cnn_model.h5", compile=False)
-    class_names = open("model_files/labels_cnn.txt", "r").readlines()
+    model = load_model("model_files/teachable_machine.h5", compile=False)
+    class_names = open("model_files/labels.txt", "r").readlines()
     
     # Check if image is uploaded
     if uploaded_file is not None:
