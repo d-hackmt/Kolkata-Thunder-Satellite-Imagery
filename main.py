@@ -38,7 +38,7 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files/keras_Model.h5")
+    model = load_model("model_files/keras_Model.h5" , compile = "True")
     class_names = open("model_files/labels.txt", "r").readlines()
     
     # Check if image is uploaded
