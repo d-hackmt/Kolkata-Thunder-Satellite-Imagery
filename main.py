@@ -35,8 +35,8 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files/teachable_machine.h5", compile=False)
-    class_names = open("model_files/labels.txt", "r").readlines()
+    model = load_model("model_files/cnn_model.h5", compile=False)
+    class_names = open("model_files/labels_cnn.txt", "r").readlines()
     
     # Check if image is uploaded
     if uploaded_file is not None:
@@ -60,21 +60,19 @@ def main():
             st.subheader("Binary Threshold Image")
             st.image(binary_image, channels="GRAY")
         
-        # Prepare the cropped image for classification
-        cropped_image_array = np.array(cropped_image)  # Convert PIL Image to numpy array
-        cropped_image_array = cropped_image_array / 255.0  # Normalize pixel values to [0, 1]
-        cropped_image_array = np.expand_dims(cropped_image_array, axis=0)  # Add batch dimension
-        
-        # Print shape of data
-        print("Shape of data:", cropped_image_array.shape)
-        
+        # Prepare the image for classification
+        binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
+        resized_image = cv2.resize(binary_image_rgb, (128, 120))  # Resize to match model input shape
+        normalized_image_array = (resized_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
+        data = np.expand_dims(normalized_image_array, axis=0)
+
         # Predict using the model
-        prediction = model.predict(cropped_image_array)
+        prediction = model.predict(data)
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
-        
+                
         # Display classification results
         st.subheader("Classification Results")
         st.write("🌩️  SITUATION:", class_name[2:])
