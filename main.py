@@ -62,7 +62,7 @@ def main():
         
         # Prepare the image for classification
         binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
-        st.image(binary_image_rgb, channels="GRAY")
+        st.image(binary_image_rgb, channels="RGB")
         resized_image = cv2.resize(binary_image_rgb, (128, 120))  # Resize to match model input shape
         normalized_image_array = (resized_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
         data = np.expand_dims(normalized_image_array, axis=0)
