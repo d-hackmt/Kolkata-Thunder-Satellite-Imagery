@@ -2,8 +2,7 @@ import cv2
 import streamlit as st
 import numpy as np
 from keras.models import load_model
-from PIL import Image, ImageOps
-import tensorflow as tf
+from PIL import Image
 from util import set_background
 
 # Function to crop and apply binary threshold to the image
@@ -36,7 +35,7 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files/cnn_model.h5" , compile = False)
+    model = load_model("model_files/cnn_model.h5", compile=False)
     class_names = open("model_files/labels.txt", "r").readlines()
     
     # Check if image is uploaded
@@ -61,10 +60,10 @@ def main():
             st.subheader("Binary Threshold Image")
             st.image(binary_image, channels="GRAY")
         
-       # Prepare the image for classification
+        # Prepare the image for classification
         resized_image = cv2.resize(binary_image, (224, 224))
         normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
-        data = np.expand_dims(normalized_image_array, axis=0)  # Add an extra dimension to represent batch size
+        data = np.expand_dims(normalized_image_array, axis=0)
         
         # Predict using the model
         prediction = model.predict(data)
@@ -72,7 +71,6 @@ def main():
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
-        
         
         # Display classification results
         st.subheader("Classification Results")
