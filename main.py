@@ -60,12 +60,10 @@ def main():
             st.subheader("Binary Threshold Image")
             st.image(binary_image, channels="GRAY")
         
-        # Prepare the image for classification
-        binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
-        st.image(binary_image_rgb)
-        resized_image = cv2.resize(binary_image_rgb, (128, 120))  # Resize to match model input shape
-        normalized_image_array = (resized_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
-        data = np.expand_dims(normalized_image_array, axis=0)
+        resized_image = cv2.resize(binary_image, (224, 224))
+        normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
+        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+        data[0] = np.stack((normalized_image_array,) * 3, axis=-1)
         
         # Predict using the model
         prediction = model.predict(data)
@@ -73,6 +71,7 @@ def main():
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
+        
 
         # Display classification results
         st.subheader("Classification Results")
