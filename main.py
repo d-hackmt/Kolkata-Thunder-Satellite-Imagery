@@ -64,13 +64,19 @@ def main():
         binary_image_rgb = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2RGB)
         st.image(binary_image_rgb, channels="GRAY")
 
+        # Prepare the image for classification
+        resized_image = cv2.resize(binary_image, (128, 120))  # Resize to match model input shape
+        expanded_image = np.expand_dims(resized_image, axis=-1)  # Add channel dimension to match model input shape
+        normalized_image_array = (expanded_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
+        data = np.expand_dims(normalized_image_array, axis=0)
+        
         # Predict using the model
-        prediction = model.predict(binary_image_rgb)
+        prediction = model.predict(data)
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
-                
+
         # Display classification results
         st.subheader("Classification Results")
         st.write("🌩️  SITUATION:", class_name[2:])
