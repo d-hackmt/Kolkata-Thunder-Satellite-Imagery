@@ -39,7 +39,7 @@ def main():
     
     # Load the classification model
     model = load_model("model_files/keras_Model.h5" , compile = "False")
-    class_names = open("model_files/labels.txt", "r").readlines()
+    class_names = open("model_files/labels_cnn.txt", "r").readlines()
     
     # Check if image is uploaded
     if uploaded_file is not None:
