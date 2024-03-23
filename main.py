@@ -69,11 +69,13 @@ def main():
         print("Shape of data:", data.shape)
         
         # Predict using the model
+
         prediction = model.predict(np.expand_dims(data, axis=0))
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
+
 
         
         # Display classification results
