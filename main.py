@@ -66,7 +66,7 @@ def main():
         data = np.expand_dims(normalized_image_array, axis=0)
         
         # Predict using the model
-        prediction = model.predict(data)
+        prediction = model.predict(np.expand_dims(data, axis=0))
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
