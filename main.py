@@ -64,7 +64,9 @@ def main():
         # Prepare the image for classification
         resized_image = cv2.resize(binary_image, (224, 224))
         normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
-        data = np.expand_dims(normalized_image_array, axis=0)
+        data = np.expand_dims(normalized_image_array, axis=0)  # Add an extra dimension to represent batch size
+        data = np.stack((data,) * 3, axis=-1)  # Stack the array to have shape (1, 224, 224, 3)
+
         
         # Predict using the model
         prediction = model.predict(data)
