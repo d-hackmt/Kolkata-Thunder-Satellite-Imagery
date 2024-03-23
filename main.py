@@ -6,8 +6,6 @@ from PIL import Image, ImageOps
 import tensorflow as tf
 from util import set_background
 
-
-
 # Function to crop and apply binary threshold to the image
 def process_image(image):
     # Specify the coordinates of the rectangle
@@ -38,8 +36,8 @@ def main():
     uploaded_file = st.file_uploader("Upload a TIR based SATELLITE IMAGE 🌩️ ", type=["jpg", "jpeg"])
     
     # Load the classification model
-    model = load_model("model_files/cnn_model.h5")
-    class_names = open("model_files/labels_cnn.txt", "r").readlines()
+    model = load_model("model_files/cnn_model.h5" , compile = False)
+    class_names = open("model_files/labels.txt", "r").readlines()
     
     # Check if image is uploaded
     if uploaded_file is not None:
@@ -66,8 +64,7 @@ def main():
         # Prepare the image for classification
         resized_image = cv2.resize(binary_image, (224, 224))
         normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        data[0] = np.stack((normalized_image_array,) * 3, axis=-1)
+        data = np.expand_dims(normalized_image_array, axis=0)
         
         # Predict using the model
         prediction = model.predict(data)
