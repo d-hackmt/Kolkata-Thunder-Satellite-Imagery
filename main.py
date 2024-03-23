@@ -65,12 +65,16 @@ def main():
         normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
         data = np.expand_dims(normalized_image_array, axis=0)
         
+        # Print shape of data
+        print("Shape of data:", data.shape)
+        
         # Predict using the model
         prediction = model.predict(np.expand_dims(data, axis=0))
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
+
         
         # Display classification results
         st.subheader("Classification Results")
