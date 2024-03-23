@@ -60,29 +60,27 @@ def main():
             st.subheader("Binary Threshold Image")
             st.image(binary_image, channels="GRAY")
         
-        # Prepare the image for classification
-        resized_image = cv2.resize(binary_image, (224, 224))
-        normalized_image_array = (resized_image.astype(np.float32) / 127.5) - 1
-        data = np.expand_dims(normalized_image_array, axis=0)
+        # Prepare the cropped image for classification
+        cropped_image_array = np.array(cropped_image)  # Convert PIL Image to numpy array
+        cropped_image_array = cropped_image_array / 255.0  # Normalize pixel values to [0, 1]
+        cropped_image_array = np.expand_dims(cropped_image_array, axis=0)  # Add batch dimension
         
         # Print shape of data
-        print("Shape of data:", data.shape)
+        print("Shape of data:", cropped_image_array.shape)
         
         # Predict using the model
-
-        prediction = model.predict(np.expand_dims(data, axis=0))
+        prediction = model.predict(cropped_image_array)
         index = np.argmax(prediction)
         class_name = class_names[index]
         confidence_score = prediction[0][index]
         s = 1 - confidence_score
-
-
         
         # Display classification results
         st.subheader("Classification Results")
         st.write("🌩️  SITUATION:", class_name[2:])
-        st.write("CONFIDENCE LEVEL :", confidence_score ," condifent")
-        st.write("SIGNIFICANCE LEVEL :", s ," condifent")
+        st.write("CONFIDENCE LEVEL :", confidence_score ," confident")
+        st.write("SIGNIFICANCE LEVEL :", s ," confident")
+
 
 if __name__ == "__main__":
     main()
