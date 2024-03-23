@@ -61,7 +61,7 @@ def main():
             st.image(binary_image, channels="GRAY")
         
         # Prepare the image for classification
-        resized_image = cv2.resize(binary_image, (128, 120))  # Resize to match model input shape
+        resized_image = cv2.resize(binary_image, (120, 128))  # Resize to match model input shape
         expanded_image = np.expand_dims(resized_image, axis=-1)  # Add channel dimension to match model input shape
         normalized_image_array = (expanded_image.astype(np.float32) / 255.0)  # Normalize to [0, 1]
         data = np.expand_dims(normalized_image_array, axis=0)
